@@ -1,0 +1,53 @@
+[
+  {
+    "timestamp": "2026-06-25T12:00:00",
+    "event_type": "process_start",
+    "process_name": "WINWORD.EXE",
+    "parent_process": "explorer.exe",
+    "command_line": "\"C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE\" invoice.docm",
+    "file_path": null,
+    "remote_ip": null,
+    "remote_port": null
+  },
+  {
+    "timestamp": "2026-06-25T12:00:04",
+    "event_type": "process_start",
+    "process_name": "powershell.exe",
+    "parent_process": "WINWORD.EXE",
+    "command_line": "powershell.exe -enc SQBFAFgAIAAoACcAaAB0AHQAcAA6AC8ALwBlAHgAYQBtAHAAbABlACcAKQA=",
+    "file_path": null,
+    "remote_ip": null,
+    "remote_port": null
+  },
+  {
+    "timestamp": "2026-06-25T12:00:07",
+    "event_type": "network_connection",
+    "process_name": "powershell.exe",
+    "parent_process": "WINWORD.EXE",
+    "command_line": "powershell.exe -enc SQBFAFgA...",
+    "file_path": null,
+    "remote_ip": "203.0.113.10",
+    "remote_port": 443
+  },
+  {
+    "timestamp": "2026-06-25T12:00:09",
+    "event_type": "file_create",
+    "process_name": "powershell.exe",
+    "parent_process": "WINWORD.EXE",
+    "command_line": "powershell.exe -enc SQBFAFgA...",
+    "file_path": "C:\\Users\\student\\AppData\\Local\\Temp\\invoice_update.exe",
+    "remote_ip": null,
+    "remote_port": null
+  },
+  {
+    "timestamp": "2026-06-25T12:00:18",
+    "event_type": "process_start",
+    "process_name": "invoice_update.exe",
+    "parent_process": "powershell.exe",
+    "command_line": "C:\\Users\\student\\AppData\\Local\\Temp\\invoice_update.exe",
+    "file_path": "C:\\Users\\student\\AppData\\Local\\Temp\\invoice_update.exe",
+    "remote_ip": null,
+    "remote_port": null
+  }
+]
+
