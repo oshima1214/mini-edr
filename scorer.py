@@ -126,8 +126,12 @@ def score(events, rules):
     }
 
 
+def alert_for(result):
+    return "suspicious behavior detected" if result["severity"] in {"MEDIUM", "HIGH"} else "no high-risk behavior detected"
+
+
 def print_report(result):
-    alert = "suspicious behavior detected" if result["severity"] in {"MEDIUM", "HIGH"} else "no high-risk behavior detected"
+    alert = alert_for(result)
 
     print(f"Risk Score: {result['score']}")
     print(f"Severity: {result['severity']}")
@@ -143,18 +147,31 @@ def print_report(result):
         print("Reasons: none")
 
 
+def print_json_report(result):
+    report = {
+        "risk_score": result["score"],
+        "severity": result["severity"],
+        "alert": alert_for(result),
+        "findings": result["findings"],
+    }
+    print(json.dumps(report, indent=2))
+
+
 def main():
     parser = argparse.ArgumentParser(description="Score endpoint event scenarios.")
     parser.add_argument("events", help="Path to an event scenario JSON file")
     parser.add_argument("--rules", default="rules.json", help="Path to rules JSON")
+    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON output")
     args = parser.parse_args()
 
     events = load_json(args.events)
     rules = load_json(args.rules)
     result = score(events, rules)
-    print_report(result)
+    if args.json:
+        print_json_report(result)
+    else:
+        print_report(result)
 
 
 if __name__ == "__main__":
     main()
-

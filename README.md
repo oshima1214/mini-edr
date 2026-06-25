@@ -17,6 +17,7 @@ creation, and event timing, then explains why the score increased.
 ```bash
 python scorer.py events/suspicious_office_macro.json
 python scorer.py events/normal_dev_workflow.json
+python scorer.py events/suspicious_office_macro.json --json
 ```
 
 ## Test
@@ -45,6 +46,7 @@ Reasons:
 - Scores individual events
 - Scores correlated event sequences
 - Prints severity and rule reasons
+- Supports machine-readable JSON reports with `--json`
 
 ## Out of Scope
 

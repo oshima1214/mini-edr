@@ -1,3 +1,5 @@
+import contextlib
+import io
 import json
 import sys
 import unittest
@@ -35,7 +37,20 @@ class ScorerTest(unittest.TestCase):
         self.assertEqual(result["severity"], "INFO")
         self.assertEqual(result["findings"], [])
 
+    def test_json_report_is_machine_readable(self):
+        events = load_json("events/suspicious_office_macro.json")
+        result = scorer.score(events, self.rules)
+        output = io.StringIO()
+
+        with contextlib.redirect_stdout(output):
+            scorer.print_json_report(result)
+
+        report = json.loads(output.getvalue())
+        self.assertEqual(report["risk_score"], result["score"])
+        self.assertEqual(report["severity"], "HIGH")
+        self.assertEqual(report["alert"], "suspicious behavior detected")
+        self.assertEqual(len(report["findings"]), len(result["findings"]))
+
 
 if __name__ == "__main__":
     unittest.main()
-

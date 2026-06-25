@@ -16,6 +16,7 @@ safe event scenarios and explains why behavior is considered suspicious.
 | FR-5 | Classify the result as INFO, LOW, MEDIUM, or HIGH. |
 | FR-6 | Print detection reasons with score contributions. |
 | FR-7 | Provide tests for normal and suspicious scenarios. |
+| FR-8 | Provide machine-readable JSON output for integrations. |
 
 ## Non-Functional Requirements
 
@@ -34,4 +35,3 @@ safe event scenarios and explains why behavior is considered suspicious.
 - Kernel drivers
 - Memory forensics
 - Malware sample execution
-
