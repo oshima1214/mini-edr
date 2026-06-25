@@ -1,0 +1,53 @@
+[
+  {
+    "timestamp": "2026-06-25T13:00:00",
+    "event_type": "process_start",
+    "process_name": "Code.exe",
+    "parent_process": "explorer.exe",
+    "command_line": "\"C:\\Users\\student\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" C:\\dev\\mini-edr",
+    "file_path": null,
+    "remote_ip": null,
+    "remote_port": null
+  },
+  {
+    "timestamp": "2026-06-25T13:00:08",
+    "event_type": "process_start",
+    "process_name": "powershell.exe",
+    "parent_process": "Code.exe",
+    "command_line": "powershell.exe",
+    "file_path": null,
+    "remote_ip": null,
+    "remote_port": null
+  },
+  {
+    "timestamp": "2026-06-25T13:00:20",
+    "event_type": "process_start",
+    "process_name": "npm.cmd",
+    "parent_process": "powershell.exe",
+    "command_line": "npm install",
+    "file_path": null,
+    "remote_ip": null,
+    "remote_port": null
+  },
+  {
+    "timestamp": "2026-06-25T13:00:22",
+    "event_type": "network_connection",
+    "process_name": "node.exe",
+    "parent_process": "npm.cmd",
+    "command_line": "node C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js install",
+    "file_path": null,
+    "remote_ip": "104.16.0.35",
+    "remote_port": 443
+  },
+  {
+    "timestamp": "2026-06-25T13:00:31",
+    "event_type": "file_create",
+    "process_name": "node.exe",
+    "parent_process": "npm.cmd",
+    "command_line": "npm install",
+    "file_path": "C:\\dev\\mini-edr\\node_modules\\example\\index.js",
+    "remote_ip": null,
+    "remote_port": null
+  }
+]
+
