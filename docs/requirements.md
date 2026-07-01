@@ -1,37 +1,38 @@
-# Requirements
+# 要件定義
 
-## Purpose
+## 目的
 
-Mini EDR is a learning-oriented endpoint behavior scoring prototype. It evaluates
-safe event scenarios and explains why behavior is considered suspicious.
+Mini EDRは、エンドポイント上の振る舞いをスコアリングする学習用プロトタイプです。
 
-## Functional Requirements
+安全なイベントシナリオをJSONとして読み込み、プロセス起動、親子プロセス関係、ネットワーク接続、ファイル作成、時系列のつながりをもとに不審度を算出します。また、なぜ不審と判断したのかを検知理由として出力します。
 
-| ID | Requirement |
+## 機能要件
+
+| ID | 要件 |
 | --- | --- |
-| FR-1 | Read endpoint event scenarios from JSON files. |
-| FR-2 | Apply event-level detection rules. |
-| FR-3 | Apply sequence-level detection rules across related events. |
-| FR-4 | Calculate a total risk score. |
-| FR-5 | Classify the result as INFO, LOW, MEDIUM, or HIGH. |
-| FR-6 | Print detection reasons with score contributions. |
-| FR-7 | Provide tests for normal and suspicious scenarios. |
-| FR-8 | Provide machine-readable JSON output for integrations. |
+| FR-1 | JSONファイルからエンドポイントイベントのシナリオを読み込めること。 |
+| FR-2 | イベント単体に対する検知ルールを適用できること。 |
+| FR-3 | 関連する複数イベントに対して、時系列・相関関係にもとづく検知ルールを適用できること。 |
+| FR-4 | 検知結果から合計リスクスコアを算出できること。 |
+| FR-5 | 合計リスクスコアをもとに、INFO、LOW、MEDIUM、HIGHの重要度に分類できること。 |
+| FR-6 | スコアに影響した検知理由と加点内容を出力できること。 |
+| FR-7 | 正常シナリオと怪しいシナリオをテストで検証できること。 |
+| FR-8 | 外部連携や自動処理に利用しやすいJSON形式のレポートを出力できること。 |
 
-## Non-Functional Requirements
+## 非機能要件
 
-| ID | Requirement |
+| ID | 要件 |
 | --- | --- |
-| NFR-1 | The prototype must not execute malware or offensive payloads. |
-| NFR-2 | The scoring logic should be explainable. |
-| NFR-3 | The first version should run with only Python standard libraries. |
-| NFR-4 | Rules should be editable without changing the core scoring code. |
-| NFR-5 | Test scenarios should be reproducible. |
+| NFR-1 | 実マルウェアや攻撃用ペイロードを実行しないこと。 |
+| NFR-2 | スコアリング結果が説明可能であること。 |
+| NFR-3 | 初期バージョンはPython標準ライブラリのみで動作すること。 |
+| NFR-4 | コアのスコアリング処理を変更せずに、検知ルールを編集できること。 |
+| NFR-5 | テストシナリオを再現可能な形で管理できること。 |
 
-## Current Out of Scope
+## 現在の対象外
 
-- Real-time endpoint monitoring
-- Automatic blocking, deletion, or quarantine
-- Kernel drivers
-- Memory forensics
-- Malware sample execution
+- リアルタイムのエンドポイント監視
+- 自動的なブロック、削除、隔離
+- カーネルドライバ
+- メモリフォレンジック
+- マルウェアサンプルの実行
