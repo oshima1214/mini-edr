@@ -1,71 +1,93 @@
 # Mini EDR Scoring Prototype
 
-Windows endpoint behavior scoring prototype for a security portfolio project.
+Windows端末上の振る舞いをスコアリングする、学習用のミニEDRプロトタイプです。
 
-This first version does not monitor the real system. It reads safe, hand-written
-event scenarios from JSON files and scores suspicious behavior using explainable
-rules.
+このバージョンでは、実際の端末監視やマルウェア実行は行いません。安全な手書きのイベントJSONを読み込み、プロセス起動、親子プロセス関係、ネットワーク接続、ファイル作成、時系列のつながりから不審度を算出します。
 
-## Goal
+## 目的
 
-Detect suspicious behavior from a sequence of endpoint events, not from a single
-indicator. The scorer evaluates process relationships, network activity, file
-creation, and event timing, then explains why the score increased.
+単一のイベントだけで判断するのではなく、複数のエンドポイントイベントの流れから不審な振る舞いを検知することを目的としています。
 
-## Run
+スコアリング時には、なぜスコアが上がったのかを検知理由として出力します。これにより、検知結果を説明しやすくし、誤検知の改善にもつなげやすい設計にしています。
+
+## 実行方法
+
+怪しいシナリオをスコアリングします。
 
 ```bash
 python scorer.py events/suspicious_office_macro.json
+```
+
+正常な開発作業シナリオをスコアリングします。
+
+```bash
 python scorer.py events/normal_dev_workflow.json
 python scorer.py events/suspicious_office_macro.json --json
 ```
 
-## Test
+## テスト
 
 ```bash
 python -m unittest discover -s tests
 ```
 
-## Example
+## 実行例
 
 ```text
-Risk Score: 90
+Risk Score: 115
 Severity: HIGH
 Alert: suspicious behavior detected
 
 Reasons:
 - Office process launched a script interpreter (+30)
+- PowerShell used encoded command (+25)
 - Script interpreter made a network connection (+20)
 - Executable file was created (+20)
 - Created executable was launched soon (+20)
 ```
 
-## Current Scope
+## 現在できること
 
-- Reads sample events from JSON
-- Scores individual events
-- Scores correlated event sequences
-- Prints severity and rule reasons
-- Supports machine-readable JSON reports with `--json`
+- JSON形式のサンプルイベントを読み込む
+- イベント単体の検知ルールを評価する
+- 複数イベントの時系列的なつながりを評価する
+- リスクスコアと重要度を出力する
+- スコアが上がった理由を表示する
+- `--json` による機械処理しやすいJSONレポート出力に対応する
+- 正常シナリオと怪しいシナリオを単体テストで検証する
 
-## Out of Scope
+## 現在の対象外
 
-- Real malware execution
-- Automatic blocking or deletion
-- Kernel drivers
-- Memory inspection
-- Background monitoring
+- 実マルウェアの実行
+- 自動的なブロック、削除、隔離
+- カーネルドライバ
+- メモリ解析
+- 常駐型のリアルタイム監視
 
-## Roadmap
+## 構成
 
-1. Add more normal and suspicious scenarios
-2. Add unit tests for expected scores
-3. Store events and alerts in SQLite
-4. Add a FastAPI dashboard API
-5. Add a simple web timeline
-6. Add safe Windows event collection with `psutil` and `watchdog`
-7. Add Sysmon log import support
+```text
+.
+├── scorer.py                         # スコアリングCLI
+├── rules.json                        # 検知ルール
+├── events/
+│   ├── normal_dev_workflow.json       # 正常シナリオ
+│   └── suspicious_office_macro.json   # 怪しいシナリオ
+├── tests/
+│   └── test_scorer.py                 # 単体テスト
+└── docs/
+    └── requirements.md                # 要件定義
+```
 
-## Documents
+## ロードマップ
 
-- [Requirements](docs/requirements.md)
+1. 正常シナリオと怪しいシナリオを追加する
+2. SQLiteにイベントとアラートを保存する
+3. FastAPIでダッシュボード用APIを作成する
+4. Web UIでタイムラインとアラートを表示する
+5. `psutil` や `watchdog` を使って安全な実イベント収集を追加する
+6. Sysmonログの取り込みに対応する
+
+## ドキュメント
+
+- [要件定義](docs/requirements.md)
